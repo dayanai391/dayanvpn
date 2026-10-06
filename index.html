@@ -118,6 +118,14 @@
     <button class="btn-ghost" id="dlBtn">Download .txt</button>
   </div>
 
+  <div id="subSection" style="display:none">
+    <div class="label">Subscription link (all servers)</div>
+    <div class="linkbox" id="sublink" style="max-height:56px">—</div>
+    <div class="actions">
+      <button class="btn-ghost" id="subBtn">Copy subscription</button>
+    </div>
+  </div>
+
   <div class="qr-wrap"><div id="qr"></div></div>
   <div class="qr-note">Scan with v2rayNG, Nekobox, Streisand or any V2Ray client</div>
 
@@ -193,6 +201,24 @@
     document.body.removeChild(a);
     URL.revokeObjectURL(a.href);
     toast("Downloaded DayanVPN.txt");
+  });
+
+  // Subscription link — shown only if the server has SERVERS configured
+  var subLink = location.origin + "/sub";
+  fetch(subLink, { method: "HEAD" }).then(function (r) {
+    if (r.ok) {
+      document.getElementById("sublink").textContent = subLink;
+      document.getElementById("subSection").style.display = "block";
+    }
+  }).catch(function () {});
+
+  document.getElementById("subBtn").addEventListener("click", function () {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(subLink).then(
+        function () { toast("Subscription copied!"); },
+        function () {}
+      );
+    }
   });
 
   // QR code (graceful fallback if CDN is unreachable)

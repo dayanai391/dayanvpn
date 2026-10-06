@@ -52,6 +52,23 @@ Manual share link format:
 vless://YOUR-UUID@your-domain.up.railway.app:443?encryption=none&security=tls&sni=your-domain.up.railway.app&type=ws&host=your-domain.up.railway.app&path=%2Fray#DayanVPN
 ```
 
+## Multiple servers + one subscription link
+
+Run the same project in several Railway regions so users can pick the fastest location, all behind a single subscription URL.
+
+1. **Deploy the service once** (steps above) → generate a domain, note it (e.g. `...up.railway.app` → tag `US`).
+2. **Add more servers:** in your Railway project click **+ Create → GitHub repo**, pick the **same repo** again → a second service builds from identical code (same UUID). For each new service:
+   - **Settings → Region** → pick a different region (e.g. Europe, Asia).
+   - **Networking tab → Generate Domain** → note its domain.
+3. **Tell every service about all servers:** open the **Variables** tab on **each** service and add one variable:
+   ```
+   SERVERS = us-app.up.railway.app:US,eu-app.up.railway.app:EU,ap-app.up.railway.app:AP
+   ```
+   Same value everywhere — format is `domain:TAG` separated by commas. Saving a variable triggers an automatic redeploy.
+4. **Subscription URL:** `https://any-one-of-your-domains/sub` — import it in your client (v2rayNG: *Settings → Online subscriptions*; Hiddify: *Add profile → URL*). The client now shows all servers, named `DayanVPN-US`, `DayanVPN-EU`, … The landing page also shows the subscription link automatically once configured.
+
+Tips: for users in Iran, EU regions usually beat US in latency; let each user test and keep the fastest. Adding servers does not raise the speed of a single connection — it adds *choices*.
+
 ## Troubleshooting
 
 - **404 on the domain** → the repo doesn't contain these files (old version deployed). Verify the build log shows `apk add ... nginx` and `COPY index.html`.
