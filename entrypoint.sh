@@ -18,7 +18,10 @@ if [ -n "$SERVERS" ]; then
       *:*) d="${entry%:*}"; t="${entry#*:}" ;;
       *)   d="$entry";      t="" ;;
     esac
+    # Classic WebSocket config (works on all clients)
     echo "vless://${UUID}@${d}:443?encryption=none&security=tls&sni=${d}&type=ws&host=${d}&path=%2Fray#DayanVPN${t:+-${t}}" >> /tmp/sub.txt
+    # Newer XHTTP config (faster / harder to detect — needs a recent client)
+    echo "vless://${UUID}@${d}:443?encryption=none&security=tls&sni=${d}&type=xhttp&path=%2Fxray&mode=auto#DayanVPN${t:+-${t}}⚡" >> /tmp/sub.txt
   done
   base64 /tmp/sub.txt | tr -d '\n' > /usr/share/nginx/html/sub
 fi

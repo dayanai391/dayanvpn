@@ -26,6 +26,30 @@
         "enabled": true,
         "destOverride": ["http", "tls", "quic"]
       }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": 10087,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "5f2c9d81-4b6e-4a37-9c1d-8e0a7b3f6d24",
+            "flow": ""
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "xhttpSettings": {
+          "path": "/xray"
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls", "quic"]
+      }
     }
   ],
   "outbounds": [
@@ -44,6 +68,75 @@
       {
         "type": "field",
         "ip": ["geoip:private"],
+        "outboundTag": "blocked"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "doubleclick.net",
+          "googlesyndication.com",
+          "googleadservices.com",
+          "google-analytics.com",
+          "googletagmanager.com",
+          "adservice.google.com",
+          "adnxs.com",
+          "moatads.com",
+          "taboola.com",
+          "outbrain.com",
+          "criteo.com",
+          "pubmatic.com",
+          "rubiconproject.com",
+          "openx.net",
+          "casalemedia.com",
+          "smartadserver.com",
+          "adform.net",
+          "yieldmo.com",
+          "sharethrough.com",
+          "bidswitch.net",
+          "33across.com",
+          "teads.tv",
+          "zedo.com",
+          "adroll.com",
+          "media.net",
+          "amazon-adsystem.com",
+          "trafficjunky.net",
+          "popads.net",
+          "popcash.net",
+          "propellerads.com",
+          "adsterra.com",
+          "mgid.com",
+          "revcontent.com",
+          "exoclick.com",
+          "juicyads.com",
+          "trafficstars.com",
+          "bitmedia.io",
+          "coinzilla.com",
+          "a-ads.com",
+          "adskeeper.com",
+          "hilltopads.net",
+          "galaksion.com",
+          "zeropark.com",
+          "adcolony.com",
+          "applovin.com",
+          "vungle.com",
+          "ironsource.com",
+          "chartboost.com",
+          "mopub.com",
+          "inmobi.com",
+          "startappservice.com",
+          "airpush.com",
+          "leadbolt.com",
+          "unityads.unity3d.com",
+          "addthis.com",
+          "sharethis.com",
+          "hotjar.com",
+          "mixpanel.com",
+          "segment.io",
+          "amplitude.com",
+          "matomo.org",
+          "clarity.ms",
+          "mc.yandex.ru"
+        ],
         "outboundTag": "blocked"
       }
     ]
